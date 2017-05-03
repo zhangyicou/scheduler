@@ -1,7 +1,7 @@
-package com.shengjing.ibd.quartz.service;
+package com.shengjing.ibd.scheduler.service;
 
 
-import com.shengjing.ibd.quartz.vo.ScheduleJobVo;
+import com.shengjing.ibd.scheduler.vo.ScheduleJobVo;
 
 import java.util.List;
 

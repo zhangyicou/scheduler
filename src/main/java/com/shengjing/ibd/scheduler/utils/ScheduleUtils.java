@@ -1,10 +1,10 @@
-package com.shengjing.ibd.quartz.utils;
+package com.shengjing.ibd.scheduler.utils;
 
-import com.shengjing.ibd.quartz.exceptions.ScheduleException;
-import com.shengjing.ibd.quartz.model.ScheduleJob;
-import com.shengjing.ibd.quartz.quartz.AsyncJobFactory;
-import com.shengjing.ibd.quartz.quartz.SyncJobFactory;
-import com.shengjing.ibd.quartz.vo.ScheduleJobVo;
+import com.shengjing.ibd.scheduler.exceptions.ScheduleException;
+import com.shengjing.ibd.scheduler.model.ScheduleJob;
+import com.shengjing.ibd.scheduler.quartz.AsyncJobFactory;
+import com.shengjing.ibd.scheduler.quartz.SyncJobFactory;
+import com.shengjing.ibd.scheduler.vo.ScheduleJobVo;
 import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

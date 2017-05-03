@@ -1,4 +1,4 @@
-package com.shengjing.ibd.quartz.exceptions;
+package com.shengjing.ibd.scheduler.exceptions;
 
 import com.dexcoder.commons.exceptions.DexcoderException;
 

@@ -1,4 +1,4 @@
-package com.shengjing.ibd.quartz.controller;
+package com.shengjing.ibd.scheduler.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

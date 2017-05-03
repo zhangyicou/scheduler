@@ -1,12 +1,12 @@
-package com.shengjing.ibd.quartz.service.impl;
+package com.shengjing.ibd.scheduler.service.impl;
 
 import com.dexcoder.commons.bean.BeanConverter;
 import com.dexcoder.dal.JdbcDao;
 import com.dexcoder.dal.build.Criteria;
-import com.shengjing.ibd.quartz.model.ScheduleJob;
-import com.shengjing.ibd.quartz.service.ScheduleJobService;
-import com.shengjing.ibd.quartz.utils.ScheduleUtils;
-import com.shengjing.ibd.quartz.vo.ScheduleJobVo;
+import com.shengjing.ibd.scheduler.model.ScheduleJob;
+import com.shengjing.ibd.scheduler.service.ScheduleJobService;
+import com.shengjing.ibd.scheduler.utils.ScheduleUtils;
+import com.shengjing.ibd.scheduler.vo.ScheduleJobVo;
 import org.apache.commons.collections.CollectionUtils;
 import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;

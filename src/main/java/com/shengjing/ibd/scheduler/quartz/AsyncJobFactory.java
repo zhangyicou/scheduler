@@ -1,7 +1,7 @@
-package com.shengjing.ibd.quartz.quartz;
+package com.shengjing.ibd.scheduler.quartz;
 
-import com.shengjing.ibd.quartz.model.ScheduleJob;
-import com.shengjing.ibd.quartz.vo.ScheduleJobVo;
+import com.shengjing.ibd.scheduler.model.ScheduleJob;
+import com.shengjing.ibd.scheduler.vo.ScheduleJobVo;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;

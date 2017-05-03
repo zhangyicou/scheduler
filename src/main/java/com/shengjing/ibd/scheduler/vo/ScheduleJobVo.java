@@ -1,54 +1,56 @@
-package com.shengjing.ibd.quartz.model;
+package com.shengjing.ibd.scheduler.vo;
 
 import com.dexcoder.commons.pager.Pageable;
-
 import java.util.Date;
 
 /**
  * author : fengjing
  * createTime : 2016-08-04
- * description : 计划任务模型
+ * description : 定时任务模型Vo
  * version : 1.0
  */
-public class ScheduleJob extends Pageable {
+public class ScheduleJobVo extends Pageable {
 
-    private static final long serialVersionUID = 4888005949821878223L;
+    private static final long  serialVersionUID = -4216107640768329946L;
+
+    /** 任务调度的参数key */
+    public static final String JOB_PARAM_KEY    = "jobParam";
 
     /** 任务id */
-    private Long              scheduleJobId;
+    private Long               scheduleJobId;
 
     /** 任务名称 */
-    private String            jobName;
+    private String             jobName;
 
     /** 任务别名 */
-    private String            aliasName;
+    private String             aliasName;
 
     /** 任务分组 */
-    private String            jobGroup;
+    private String             jobGroup;
 
     /** 触发器 */
-    private String            jobTrigger;
+    private String             jobTrigger;
 
     /** 任务状态 */
-    private String            status;
+    private String             status;
 
     /** 任务运行时间表达式 */
-    private String            cronExpression;
+    private String             cronExpression;
 
     /** 是否异步 */
-    private Boolean           isSync;
+    private Boolean            isSync;
 
     /** 任务描述 */
-    private String            description;
+    private String             description;
 
     /** 创建时间 */
-    private Date              gmtCreate;
+    private Date               gmtCreate;
 
     /** 修改时间 */
-    private Date              gmtModify;
+    private Date               gmtModify;
 
     /** 任务执行url */
-    private String            url;
+    private String             url;
 
     public Long getScheduleJobId() {
         return scheduleJobId;
@@ -106,14 +108,6 @@ public class ScheduleJob extends Pageable {
         this.cronExpression = cronExpression;
     }
 
-    public Boolean getIsSync() {
-        return isSync;
-    }
-
-    public void setIsSync(Boolean isSync) {
-        this.isSync = isSync;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -138,29 +132,19 @@ public class ScheduleJob extends Pageable {
         this.gmtModify = gmtModify;
     }
 
+    public Boolean getIsSync() {
+        return isSync;
+    }
+
+    public void setIsSync(Boolean isSync) {
+        this.isSync = isSync;
+    }
+
     public String getUrl() {
         return url;
     }
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    @Override
-    public String toString() {
-        return "ScheduleJob{" +
-                "scheduleJobId=" + scheduleJobId +
-                ", jobName='" + jobName + '\'' +
-                ", aliasName='" + aliasName + '\'' +
-                ", jobGroup='" + jobGroup + '\'' +
-                ", jobTrigger='" + jobTrigger + '\'' +
-                ", status='" + status + '\'' +
-                ", cronExpression='" + cronExpression + '\'' +
-                ", isSync=" + isSync +
-                ", description='" + description + '\'' +
-                ", gmtCreate=" + gmtCreate +
-                ", gmtModify=" + gmtModify +
-                ", url='" + url + '\'' +
-                '}';
     }
 }

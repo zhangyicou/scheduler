@@ -1,7 +1,7 @@
-package com.shengjing.ibd.quartz.controller;
+package com.shengjing.ibd.scheduler.controller;
 
-import com.shengjing.ibd.quartz.service.ScheduleJobService;
-import com.shengjing.ibd.quartz.vo.ScheduleJobVo;
+import com.shengjing.ibd.scheduler.service.ScheduleJobService;
+import com.shengjing.ibd.scheduler.vo.ScheduleJobVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
