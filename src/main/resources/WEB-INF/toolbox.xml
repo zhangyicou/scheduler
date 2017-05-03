@@ -1,0 +1,12 @@
+<toolbox>
+    <tool>
+        <scope>application</scope>
+        <key>dateUtil1</key>
+        <class>org.apache.velocity.tools.generic.DateTool</class>
+    </tool>
+    <tool>
+        <scope>application</scope>
+        <key>dateUtil2</key>
+        <class>com.helloworld.util.TimeFormatUtil</class>
+    </tool>
+</toolbox>
