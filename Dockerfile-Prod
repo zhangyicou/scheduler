@@ -1,0 +1,14 @@
+FROM reg.ibd.lan/java/jre_1.8.0_112:1.0.0
+
+MAINTAINER Zhang Yicou <zhangyc01@shengjing360.com>
+
+COPY dists/ibd-scheduler.jar /opt/java/
+COPY run-proc.sh /opt/java/
+
+VOLUME /dat/log/scheduler
+
+RUN chmod +x /opt/java/run-proc.sh \
+  && rm -rf /etc/localtime \
+  && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+CMD /opt/java/run-proc.sh

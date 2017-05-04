@@ -1,0 +1,155 @@
+stages:
+  - build
+  - review
+  - image
+  - deploy
+  - test
+  - merge
+variables:
+  APP_NAME: ibd-data-api
+  REGISTRY_HOST_PROC: registry.cn-hangzhou.aliyuncs.com
+  PROJECT_GROUP_PROC: ibd
+  APP_IMAGE_PROC: $REGISTRY_HOST_PROC/$PROJECT_GROUP_PROC/$APP_NAME
+  REGISTRY_HOST_TEST: reg.ibd.lan
+  PROJECT_GROUP_TEST: java
+  APP_IMAGE_TEST: $REGISTRY_HOST_TEST/$PROJECT_GROUP_TEST/$APP_NAME
+  PRODUCTION_SERVICE_NAME: ibd-data-api
+  STAGING_SERVICE_NAME: ibd-data-api
+
+build:
+  stage: build
+  script:
+    - mvn clean package -Dmaven.test.skip=true
+    - pwd
+    - jarFile=`ls target/ibd-data-api*.jar | awk -F'/' '{print$2}'`
+    - echo $jarFile
+    - date
+    - mkdir dists
+    - mv target/$jarFile dists/ibd-data-api.jar
+  artifacts:
+    paths:
+      - dists/*.jar
+    expire_in: 1 hour
+  except:
+    - dev-zhangyc
+#  tags:
+#    - "93.46"
+review:
+  stage: review
+  before_script: []
+  script:
+    - echo "Review for unit testing "
+  except:
+    - master
+    - dev-zhangyc
+#  tags:
+#    - "93.46"
+review_1:
+  stage: review
+  before_script: []
+  script:
+    - echo "Review for p2p  ntesting "
+  except:
+    - master
+    - dev-zhangyc
+#  tags:
+#    - "93.46"
+# Depends on CLOUDSDK_CORE_PROJECT, CLOUDSDK_CONTAINER_CLUSTER, and CLOUDSDK_COMPUTE_ZONE being set
+# .gcloud: &gcloud
+#  -.gcloud: &gcloud echo $GCLOUD_SERVICE_KEY | base64 --decode -i > ~/gcloud-service-key.json
+#  - gcloud auth activate-service-account --key-file ~/gcloud-service-key.json
+#  - gcloud --quiet container clusters get-credentials $CLOUDSDK_CONTAINER_CLUSTER
+.reg_private: &reg_private_TEST
+  - docker login -u zhangyc01 -p Zhang19850224 $REGISTRY_HOST_TEST
+# Non-master branches and tags will be released with :<ref_name> as the tag
+image-by-name:
+  stage: image
+  before_script: *reg_private_TEST
+  script:
+    - echo "CI_BUILD_REF="$CI_BUILD_REF
+    - docker build --file Dockerfile-Test --pull -t $APP_IMAGE_TEST:$CI_BUILD_REF .
+    - docker push $APP_IMAGE_TEST:$CI_BUILD_REF
+  dependencies:
+  - build
+  when: manual
+  except:
+    - master
+#  tags:
+#    - "93.46"
+
+.reg_private: &reg_private_PROC
+  - docker login -u shengjingibd -p ibdGY123 $REGISTRY_HOST_PROC
+# Master will be released with :latest as the tag
+image-master:
+  stage: image
+  before_script: *reg_private_PROC
+  dependencies:
+  - build
+  script:
+    - docker build --file Dockerfile-Prod --pull -t $APP_IMAGE_PROC:$CI_BUILD_REF .
+    - docker tag $APP_IMAGE_PROC:$CI_BUILD_REF $APP_IMAGE_PROC:latest
+    - docker push $APP_IMAGE_PROC:latest
+    - docker push $APP_IMAGE_PROC:$CI_BUILD_REF
+  when: manual
+  only:
+    - master
+#  tags:
+#    - "93.46"
+
+.prod_deploy: &prod_deploy
+  stage: deploy
+  environment: production
+  before_script: *reg_private_PROC
+  script:
+# The following line command only run once in your initializtion deployment in K8s enviroments.
+    - kubectl create -f ibd-data-jobs-prod-init.yaml
+#    - kubectl apply -f ibd-data-jobs-prod-init.yaml
+    - kubectl patch deployment $PRODUCTION_SERVICE_NAME --namespace=demo -p '{"spec":{"template":{"spec":{"containers":[{"name":"'"$PRODUCTION_SERVICE_NAME"'","image":"'"$APP_IMAGE:$CI_BUILD_REF"'"}]}}}}'
+.staging_deploy: &staging_deploy
+  stage: deploy
+  environment: staging
+  before_script: *reg_private_TEST
+  script:
+# The following line command only run once in your initializtion deployment in K8s enviroments.
+    - kubectl create -f ibd-data-jobs-prod-init.yaml
+#    - kubectl apply -f ibd-data-jobs-prod-init.yaml
+    - kubectl patch deployment $STAGING_SERVICE_NAME --namespace=staging -p '{"spec":{"template":{"spec":{"containers":[{"name":"'"$STAGING_SERVICE_NAME"'","image":"'"$APP_IMAGE:$CI_BUILD_REF"'"}]}}}}'
+#auto-deploy-master:
+#  <<: *staging_deploy
+#  only:
+#    - master
+auto-deploy-tags:
+  <<: *prod_deploy
+  only:
+    - tags
+deploy to staging:
+  <<: *staging_deploy
+  when: manual
+  except:
+    - master
+    - tags
+deploy to production:
+  <<: *prod_deploy
+  when: manual
+  only:
+    - master
+test-by-name:
+  stage: test
+  before_script: []
+  dependencies:
+    - image-by-name
+  script:
+    - echo "for Integration Testing"
+#    - curl -sSL http://localhost:80
+  when: manual
+  except:
+    - master
+merge-master:
+  stage: merge
+  before_script: []
+  script:
+    - echo "Merge source code master"
+#   - git merge
+  when: manual
+  except:
+    - master

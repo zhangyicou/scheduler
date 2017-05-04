@@ -1,0 +1,15 @@
+#FROM reg.ibd.lan/demo/centos-jdk:1.8u112
+FROM reg.ibd.lan/java/jre_1.8.0_112:1.0.0
+
+MAINTAINER Zhang Yicou <zhangyc01@shengjing360.com>
+
+COPY dists/ibd-scheduler.jar /opt/java/
+COPY run-test.sh /opt/java/
+
+VOLUME /dat/log/ibd-scheduler
+
+RUN chmod +x /opt/java/run-test.sh \
+    && rm -rf /etc/localtime \
+    && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+CMD /opt/java/run-test.sh
