@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <contextName>ibd-data-api</contextName>
+  <property name="LOG_PATH" value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}" />
+  <property name="SERVER_NAME" value="ibd-data-api" />
+  <!-- *.out（包括控制台的所有输出） -->
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS, Asia/Shanghai}] [%-5level] app - ${SERVER_NAME}[${PID}][%t] -[%F]%C %method %msg%n</pattern>
+      <charset>UTF-8</charset>
+    </encoder>
+  </appender>
+  <!-- APP log 日志优先级大于或等于DEBUG的日志输出；每天/10MB产生一个日志文件，最多保留10天，自动回滚-->
+  <appender name="APP" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    　<file>${LOG_PATH}/app/debug.log</file>
+      <filter class="ch.qos.logback.classic.filter.LevelFilter">
+        <level>INFO</level>
+      </filter>
+　　　　<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+　　　　　　　<fileNamePattern>${LOG_PATH}/app/debug.%i.log</fileNamePattern>
+　　　　　　　<minIndex>1</minIndex>
+　　　　　　　<maxIndex>100</maxIndex>
+　　　　</rollingPolicy>
+
+　　　　<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+　　　　　　　<maxFileSize>20MB</maxFileSize>
+　　　　</triggeringPolicy>
+　　　　<encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS, Asia/Shanghai}] [%-5level] app - ${SERVER_NAME}[${PID}][%t] -[%F]%C %method %msg%n</pattern>
+        <charset>UTF-8</charset>
+  </encoder>
+    　</appender>
+  <!-- err log 日志优先级等于ERROR的日志输出；每天/10MB产生一个日志文件，最多保留10天，自动回滚-->
+  <!--<appender name="ERR" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+    <!--<File>-->
+      <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+        <!--<level>ERROR</level>-->
+        <!--<onMatch>ACCEPT</onMatch>-->
+        <!--<onMismatch>DENY</onMismatch>-->
+      <!--</filter>-->
+      <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+        <!--<fileNamePattern>${LOG_PATH}/app/err.%d{yyyyMMdd}.%i.log</fileNamePattern>-->
+        <!--<maxHistory>4</maxHistory>-->
+        <!--<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+          <!--<maxFileSize>10MB</maxFileSize>-->
+        <!--</timeBasedFileNamingAndTriggeringPolicy>-->
+      <!--</rollingPolicy>-->
+      <!--<encoder>-->
+        <!--<pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS, Asia/Shanghai}] [%-5level] app - ${SERVER_NAME}[${PID}][%t] -[%F]%C %method %msg%n</pattern>-->
+        <!--<charset>UTF-8</charset>-->
+      <!--</encoder>-->
+    <!--</File>-->
+  <!--</appender>-->
+
+  <!-- 全局的日志过滤级别，默认：DEBUG INFO（children can override） -->
+  <root level="INFO">
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="APP" />
+    <!--<appender-ref ref="ERR" />-->
+  </root>
+</configuration>
