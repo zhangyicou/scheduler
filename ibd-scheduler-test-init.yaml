@@ -1,0 +1,92 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ibd-scheduler
+  namespace: ibd
+spec:
+  selector:
+    app: ibd-scheduler
+  ports:
+  - name: http
+    port: 9606
+    protocol: TCP
+    targetPort: 9606
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ibd-scheduler
+  namespace: ibd
+spec:
+  replicas: 1
+  strategy:
+    #type: Recreate
+    rollingUpdate:
+      maxSurge: 1 #滚动升级时会先启动1个pod
+      maxUnavailable: 0 #滚动升级时允许的最大Unavailable的pod个数
+  template:
+    metadata:
+      labels:
+        app: ibd-scheduler
+    spec:
+#      nodeSelector:
+#        kubeadm.alpha.kubernetes.io/log: es
+      containers:
+      - name: ibd-scheduler
+        image: reg.ibd.lan/java/ibd-scheduler:7deb3a24c1d93295c1af917800ae049756c7e51a
+        readinessProbe:
+          httpGet:
+            path: /api/v1/scheduler/status
+            port: 9606
+            scheme: HTTP
+          initialDelaySeconds: 60
+          timeoutSeconds: 15
+        resources:
+          limits:
+            memory: 600Mi
+          requests:
+            cpu: 0.5
+            memory: 600Mi
+        ports:
+        - containerPort: 9606
+          name: ibd-scheduler
+        volumeMounts:
+        - name: data
+          mountPath: /dat/log/ibd-scheduler
+        - name: localtime
+          mountPath: /etc/localtime
+#        volumeMounts:
+#        - name: gather-api-persistent-storage
+#          mountPath: /data
+#          readOnly: true
+#      volumes:
+#      - name: gather-api-persistent-storage
+#        hostPath:
+#          path: /data/gather/api
+        env:
+#        - name: POD_NAME
+#          valueFrom:
+#            fieldRef:
+#              fieldPath: metadata.name
+#        - name: POD_NAMESPACE
+#          valueFrom:
+#            fieldRef:
+#              fieldPath: metadata.namespace
+        - name: SCHEDULER_LOG
+          value: "-p /dat/log/scheduler -l debug"
+# LOG_LEVEL 0-Fatal/Critical,1-Error,2-Warning,3-Info,4-Debug,5-Trace
+        - name: SCHEDULER_DB
+          value: "-n master -h 192.168.93.150 -P 3306 -u root -p 123456"
+        - name: SCHEDULER_DB_CONN
+          value: " "
+      imagePullSecrets:
+      - name: aliyun.internal.registry
+      volumes:
+      - name: data
+        hostPath:
+          path: /dat/log/ibd-scheduler
+      - name: localtime
+        hostPath:
+          path: /etc/localtime
+
