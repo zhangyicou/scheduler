@@ -6,15 +6,15 @@ stages:
   - test
   - merge
 variables:
-  APP_NAME: ibd-data-api
+  APP_NAME: ibd-scheduler
   REGISTRY_HOST_PROC: registry.cn-hangzhou.aliyuncs.com
   PROJECT_GROUP_PROC: ibd
   APP_IMAGE_PROC: $REGISTRY_HOST_PROC/$PROJECT_GROUP_PROC/$APP_NAME
   REGISTRY_HOST_TEST: reg.ibd.lan
   PROJECT_GROUP_TEST: java
   APP_IMAGE_TEST: $REGISTRY_HOST_TEST/$PROJECT_GROUP_TEST/$APP_NAME
-  PRODUCTION_SERVICE_NAME: ibd-data-api
-  STAGING_SERVICE_NAME: ibd-data-api
+  PRODUCTION_SERVICE_NAME: ibd-scheduler
+  STAGING_SERVICE_NAME: ibd-scheduler
 
 build:
   stage: build
