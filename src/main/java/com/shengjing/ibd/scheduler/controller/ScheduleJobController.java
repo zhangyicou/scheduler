@@ -32,7 +32,7 @@ public class ScheduleJobController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
 
-        return "redirect:scheduleList.shtml";
+        return "redirect:schedulerList.shtml";
     }
 
     /**
@@ -62,7 +62,7 @@ public class ScheduleJobController {
 
         scheduleJobService.delete(scheduleJobId);
 
-        return "redirect:scheduleList.shtml";
+        return "redirect:schedulerList.shtml";
     }
 
     /**
@@ -75,7 +75,7 @@ public class ScheduleJobController {
 
         scheduleJobService.runOnce(scheduleJobId);
 
-        return "redirect:scheduleList.shtml";
+        return "redirect:schedulerList.shtml";
     }
 
     /**
@@ -86,7 +86,7 @@ public class ScheduleJobController {
     @RequestMapping(value = "pause-schedule-job", method = RequestMethod.GET)
     public String pauseScheduleJob(Long scheduleJobId) {
         scheduleJobService.pauseJob(scheduleJobId);
-        return "redirect:scheduleList.shtml";
+        return "redirect:schedulerList.shtml";
     }
 
     /**
@@ -97,7 +97,7 @@ public class ScheduleJobController {
     @RequestMapping(value = "resume-schedule-job", method = RequestMethod.GET)
     public String resumeScheduleJob(Long scheduleJobId) {
         scheduleJobService.resumeJob(scheduleJobId);
-        return "redirect:scheduleList.shtml";
+        return "redirect:schedulerList.shtml";
     }
 
     /**
@@ -120,7 +120,7 @@ public class ScheduleJobController {
         }else {
             scheduleJobService.update(scheduleJobVo);
         }
-        return "redirect:scheduleList.shtml";
+        return "redirect:schedulerList.shtml";
     }
 
     /**
@@ -129,7 +129,7 @@ public class ScheduleJobController {
      * @param modelMap
      * @return
      */
-    @RequestMapping(value = "/scheduleList", method = RequestMethod.GET)
+    @RequestMapping(value = "/schedulerList", method = RequestMethod.GET)
     public String listScheduleJob(ScheduleJobVo scheduleJobVo, ModelMap modelMap) {
 
         List<ScheduleJobVo> scheduleJobVoList = scheduleJobService.queryList(scheduleJobVo);
@@ -138,7 +138,7 @@ public class ScheduleJobController {
         List<ScheduleJobVo> executingJobList = scheduleJobService.queryExecutingJobList();
         modelMap.put("executingJobList", executingJobList);
 
-        return "scheduleList";
+        return "schedulerList";
     }
 
 }
