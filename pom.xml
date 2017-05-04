@@ -5,7 +5,7 @@
 
 	<groupId>com.shengjing.ibd.quartz</groupId>
 	<artifactId>ibd-scheduler</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>ibd-scheduler</name>
@@ -14,15 +14,80 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.6.RELEASE</version>
+		<version>1.4.2.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<ibd.nexus.host>192.168.93.2:9000</ibd.nexus.host>
 		<java.version>1.8</java.version>
 	</properties>
+
+	<profiles>
+		<profile>
+			<id>test</id>
+			<properties>
+				<ibd.nexus.host>192.168.93.2:9000</ibd.nexus.host>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<ibd.nexus.host>192.168.93.2:9000</ibd.nexus.host>
+			</properties>
+		</profile>
+	</profiles>
+
+	<repositories>
+		<repository>
+			<id>spring-releases</id>
+			<url>https://repo.spring.io/libs-release</url>
+		</repository>
+
+		<!-- 私有库 -->
+		<repository>
+			<id>ibd-repository</id>
+			<name>Ibd Maven Public Repository</name>
+			<url>http://${ibd.nexus.host}/nexus/content/groups/public</url>
+			<releases>
+				<enabled>true</enabled>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<!-- 检查更新策略： never, daily（默认值，每天检查一次）, interval:1 (where X is in minutes)
+                    or always（每次构建都检查更新） -->
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</snapshots>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-releases</id>
+			<url>https://repo.spring.io/libs-release</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<!-- 发布至ibd私有仓库 -->
+	<distributionManagement>
+
+		<repository>
+			<id>ibd-releases</id><!-- 发布版本库 -->
+			<name>ibd release repository</name>
+			<url>http://${ibd.nexus.host}/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>ibd-snapshots</id><!-- 快照版本库 -->
+			<name>ibd snapshot repository</name>
+			<url>http://${ibd.nexus.host}/nexus/content/repositories/snapshots/</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<dependencies>
 		<dependency>

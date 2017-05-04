@@ -21,11 +21,11 @@ build:
   script:
     - mvn clean package -Dmaven.test.skip=true
     - pwd
-    - jarFile=`ls target/ibd-data-api*.jar | awk -F'/' '{print$2}'`
+    - jarFile=`ls target/ibd-scheduler*.jar | awk -F'/' '{print$2}'`
     - echo $jarFile
     - date
     - mkdir dists
-    - mv target/$jarFile dists/ibd-data-api.jar
+    - mv target/$jarFile dists/ibd-scheduler.jar
   artifacts:
     paths:
       - dists/*.jar
