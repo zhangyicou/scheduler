@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ibd-scheduler
+  namespace: ibd
+  labels:
+    name: ibd-scheduler
+spec:
+  rules:
+  - host: timer.shengjingibd.com
+#  - host: iot.ibd.lan
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: ibd-scheduler
+          servicePort: 9606

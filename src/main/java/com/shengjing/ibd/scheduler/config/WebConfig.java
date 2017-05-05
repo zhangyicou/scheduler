@@ -123,7 +123,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
 //        resolver.setViewClass(VelocityToolboxView.class);
         //resolver.setToolboxConfigLocation("classpath:/WEB-INF/toolbox.xml");
         resolver.setSuffix(".vm");
-		resolver.setCache(true);
+		resolver.setCache(false);
 		resolver.setContentType("text/html; charset=UTF-8");
 		resolver.setOrder(0);
         return resolver;

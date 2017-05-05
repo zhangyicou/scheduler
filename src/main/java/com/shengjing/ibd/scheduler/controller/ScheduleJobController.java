@@ -129,7 +129,7 @@ public class ScheduleJobController {
      * @return
      */
     @RequestMapping(value = "/schedulerList", method = RequestMethod.GET)
-    public String schedulerList(ScheduleJobVo scheduleJobVo, @ModelAttribute("modelMap") ModelMap modelMap) {
+    public String schedulerList(ScheduleJobVo scheduleJobVo, ModelMap modelMap) {
 
         List<ScheduleJobVo> scheduleJobVoList = scheduleJobService.queryList(scheduleJobVo);
         modelMap.put("scheduleJobVoList", scheduleJobVoList);
