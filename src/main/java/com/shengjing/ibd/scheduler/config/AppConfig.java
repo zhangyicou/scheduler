@@ -51,7 +51,7 @@ public class AppConfig {
 //    public VelocityConfig velocityConfig() {
 //        VelocityConfigurer cfg = new VelocityConfigurer();
 //        cfg.setResourceLoader(resourceLoader);
-//        cfg.setResourceLoaderPath("/templates/");
+//        cfg.setResourceLoaderPath("classpath:/templates/");
 //        return cfg;
 //    }
 //
@@ -59,7 +59,7 @@ public class AppConfig {
 //    public ViewResolver viewResolver() {
 //        VelocityViewResolver resolver = new VelocityViewResolver();
 //        resolver.setViewClass(VelocityToolboxView.class);
-//        //resolver.setToolboxConfigLocation("classpath:/WEB-INF/toolbox.xml");
+//        resolver.setToolboxConfigLocation("classpath:/WEB-INF/toolbox.xml");
 //        resolver.setPrefix("/");
 //        resolver.setSuffix(".vm");
 //        resolver.setCache(false);
