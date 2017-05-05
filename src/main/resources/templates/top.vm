@@ -48,6 +48,5 @@
         </div>
     </nav>
     <div class="jumbotron jumbotron-margin-top">
-        <h1>Spring Quartz分布式定时任务</h1>
-        <p>Spring整合Quartz基于数据库的分布式定时任务，可动态添加、删除、修改定时任务。</p>
+        <h1>IBD分布式调度平台</h1>
     </div>
