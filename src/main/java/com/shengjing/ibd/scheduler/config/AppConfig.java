@@ -26,23 +26,23 @@ import javax.inject.Inject;
 public class AppConfig {
     private static Logger log = Logger.getLogger(AppConfig.class);
 
-    @Bean
-    @Scope("singleton")
-    public RestTemplate getRestTemplate(){
-        RestTemplate restTemplate = new RestTemplate();
-
-        return restTemplate;
-    }
-
-    @Bean
-    @Scope("singleton")
-    public HttpHeaders getHttpHeaders(){
-        HttpHeaders headers = new HttpHeaders();
-        MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
-        headers.setContentType(type);
-        headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
-        return headers;
-    }
+//    @Bean
+//    @Scope("singleton")
+//    public RestTemplate getRestTemplate(){
+//        RestTemplate restTemplate = new RestTemplate();
+//
+//        return restTemplate;
+//    }
+//
+//    @Bean
+//    @Scope("singleton")
+//    public HttpHeaders getHttpHeaders(){
+//        HttpHeaders headers = new HttpHeaders();
+//        MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
+//        headers.setContentType(type);
+//        headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
+//        return headers;
+//    }
 
 //    @Autowired
 //    private final ResourceLoader resourceLoader = new DefaultResourceLoader();
