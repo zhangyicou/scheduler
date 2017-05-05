@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>ibd-scheduler</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Spring Boot Web project</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
